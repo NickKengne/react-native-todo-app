@@ -4,26 +4,31 @@ import { useFonts } from "expo-font";
 import fonts from "./config/fonts";
 import Font from "./config/Font";
 import Card from "./components/Card";
+import axios from "axios";
 
-const data  = [
-  {
-    id: "4",
-    title: "hello guys",
-    completed: true
-  },
-  {
-    id: "7",
-    title: "hello guuuys",
-    completed: false
-  },
-  {
-    id: "6",
-    title: "hellos",
-    completed: true
-  }
-]
 export default function App() {
   const [fontsLoaded] = useFonts(fonts);
+
+  const [data, setData] = React.useState([]);
+
+  React.useEffect(() => {
+    axios
+      .get("https://jsonplaceholder.typicode.com/todos")
+      .then((response) => {
+        const newData = response.data.map((item) => {
+          return {
+            id: item.id,
+            title: item.title,
+            completed: item.completed,
+          };
+        });
+        setData(newData);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
   return !fontsLoaded ? null : (
     <SafeAreaView
       style={{
@@ -60,10 +65,13 @@ export default function App() {
         Tasks :{" "}
       </Text>
 
-      {data.map((item) => (
-        <Card isCompleted={item.completed} title={item.title} id={item.id}/>
-      ))}
-      
+      <FlatList
+        data={data}
+        renderItem={({ item }) => (
+          <Card isCompleted={item.completed} title={item.title} id={item.id} />
+        )}
+        keyExtractor={(item) => item.id.toString()}
+      />
     </SafeAreaView>
   );
 }
