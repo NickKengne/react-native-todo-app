@@ -13,7 +13,7 @@ export default function App() {
 
   React.useEffect(() => {
     axios
-      .get("https://jsonplaceholder.typicode.com/todos")
+      .get("https://jsonplaceholder.typicode.com/todos/")
       .then((response) => {
         const newData = response.data.map((item) => {
           return {
@@ -50,6 +50,7 @@ export default function App() {
           fontFamily: Font["poppins-regular"],
           fontSize: 14,
           color: "#797979",
+          
         }}
       >
         this is a native react app using data from json placeholder api with

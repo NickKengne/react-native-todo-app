@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
-import axios from "axios";
+import fonts from "../config/fonts";
+import Font from "../config/Font";
+
 
 const Card = ({ isCompleted, title, id }) => {
   return (
@@ -18,12 +20,14 @@ const Card = ({ isCompleted, title, id }) => {
       }}
     >
       <Text style={{
-        fontSize: 35,
-        color: "white"
+        fontSize: 30,
+        color: "white",
+        fontFamily: Font["poppins-semiBold"],
       }}>{id}</Text>
       <Text style={{
-        fontSize: 15,
-        color: "white"
+        fontSize: 12,
+        color: "white",
+        fontFamily: Font["poppins-semiBold"],
       }}>{title}</Text>
     </View>
   );
